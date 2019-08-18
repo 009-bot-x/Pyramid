@@ -348,3 +348,13 @@ KtxSpan 只有三个方法，但已经足以覆盖大部分使用场景。
 第三个方法是 `blockLine()`，表示段落间距。有两个参数，一个是段落间距的值，一个是是否为以后的段落都添加间距。
 
 关于 KtxSpan 的具体使用，可见项目中的示例代码 :  [KtxSpanActivity](https://github.com/lulululbj/AndroidUtilCodeKTX/blob/master/app/src/main/java/luyao/util/ktx/ui/KtxSpanActivity.kt) 。
+
+## Last
+
+以上就是这次更新的全部内容了，**AndroidUtilCodeKTX** 还是个孩子，欢迎来撩 ！
+
+> 文章首发微信公众号： **`秉心说`** ， 专注 Java 、 Android 原创知识分享，LeetCode 题解。
+>
+> AndroidUtilCodeKTX 最新更新信息，扫码关注我吧！
+
+![](https://user-gold-cdn.xitu.io/2019/4/27/16a5f352eab602c4?w=2800&h=800&f=jpeg&s=178470)
