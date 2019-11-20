@@ -4,7 +4,7 @@
 
 ## Activity
 
-* [Activity 原理剖析]([https://wanglejun.github.io/2019/10/24/的二三事](https://wanglejun.github.io/2019/10/24/%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B))
+* [Activity 原理剖析](<https://wanglejun.github.io/2019/10/24/%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B/>)
 
 ## 性能优化
 
