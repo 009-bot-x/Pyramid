@@ -1,13 +1,18 @@
-# pyramid
+# Pyramid
+
+> 这里是 **秉心说** 的知识金字塔 。
 
 
+>  无奈 [掘金](https://juejin.im/user/586eff908d6d81005879507d/posts)没有文章分类的功能，每次想找以前的文章都比较费劲。
+>
+>微信公众号的阅读体验又不忍吐槽。个人网站也还没有搭建完成。
+>
+> 所以把之前的所有文章都备份到此仓库，作为永久链接长期维护。
 
-## Activity
 
-* [Activity 原理剖析](<https://wanglejun.github.io/2019/10/24/%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B/>)
+## 走进 JDK 系列
 
-## 性能优化
+* [走进 JDK 之 Integer](article/integer.md)
 
-* [Android App 启动优化全记录](https://www.androidperformance.com/2019/11/18/Android-App-Lunch-Optimize/)
 
   
