@@ -93,4 +93,4 @@
 
 * [如何创建完美的单例模式？](article/translation/perfect_singleton.md)
 * [Null is your friend, not a mistake](article/translation/null_is_friend.md)
-* [【Medium 万赞好文】ViewModel 和 LiveData：模式 + 反模式](article/translation/opers/viewmodels-and-livedata-patterns-antipatter.md)
+* [【Medium 万赞好文】ViewModel 和 LiveData：模式 + 反模式](article/translation/viewmodels-and-livedata-patterns-antipatter.md)
