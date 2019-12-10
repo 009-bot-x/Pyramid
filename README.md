@@ -9,6 +9,10 @@
 >
 > 所以把之前的所有文章都备份到此仓库，作为永久链接长期维护。
 
+> 热爱开源，热爱写作，热爱交流，欢迎添加微信 **bingxinshuo_**  ，或者关注文末公众号回复  **进群**，
+>
+> 这里有一群志同道合的朋友在等你 ！
+
 ## 我的开源项目
 
 * [Box —— 我的开发助手](article/my/box.md)
@@ -94,3 +98,10 @@
 * [如何创建完美的单例模式？](article/translation/perfect_singleton.md)
 * [Null is your friend, not a mistake](article/translation/null_is_friend.md)
 * [【Medium 万赞好文】ViewModel 和 LiveData：模式 + 反模式](article/translation/viewmodels-and-livedata-patterns-antipatter.md)
+
+
+> 文章一般会首发微信公众号： **`秉心说`** ， 专注 Java 、 Android 原创知识分享，LeetCode 题解。
+>
+> 更多最新原创文章，扫码关注我吧！
+
+![](https://user-gold-cdn.xitu.io/2019/4/27/16a5f352eab602c4?w=2800&h=800&f=jpeg&s=178470)
