@@ -12,7 +12,7 @@
 
 ## 走进 JDK 系列
 
-* [走进 JDK 之 Integer](article/integer.md)
+* [走进 JDK 之 Integer](article/jdk/integer.md)
 
 
   
