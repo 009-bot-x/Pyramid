@@ -22,6 +22,10 @@
 * [Jetpack Compse 实战 —— 全新的开发体验](article/my/compose.md)
 * [Box 黑科技 —— 支持手机端反编译 ！](article/my/box_reverse.md)
 
+## Jetpack 系列
+
+* [硬核讲解 Jetpack 之 LifeCycle 使用篇](article/jetpack/lifecycle_1.md)
+
 ## 走进 JDK 系列
 
 * [走进 JDK 之 Integer](article/jdk/integer.md)
@@ -99,6 +103,9 @@
 * [Null is your friend, not a mistake](article/translation/null_is_friend.md)
 * [【Medium 万赞好文】ViewModel 和 LiveData：模式 + 反模式](article/translation/viewmodels-and-livedata-patterns-antipatter.md)
 
+## 年终总结
+
+* [秉心说，不一样的 2019](article/year/2019.md)
 
 > 文章一般会首发微信公众号： **`秉心说`** ， 专注 Java 、 Android 原创知识分享，LeetCode 题解。
 >
