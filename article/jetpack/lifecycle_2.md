@@ -729,8 +729,10 @@ void invokeCallback(LifecycleOwner source, Lifecycle.Event event, Object target)
 
 本想再接着分析进程生命周期 `ProcessLifecycleOwner` 和 `Lifecycle` 的协程使用相关源码，可是文章篇幅有点过长了，就留到下一篇吧，敬请期待！
 
-## 总结
+## 参考和推荐
 
+下面几篇文章同样优秀，直接仔细研读，推荐给大家。
 
-
-[Android架构之美-Lifecycle]()
+* [Android架构之美-Lifecycle](http://blog.cgsdream.org/2018/10/15/android-arch-lifecycle/)
+* [Jetpack和LifeCycle（三）](https://www.jianshu.com/p/1d2d566e5690)
+* [Android-Lifecycle超能解析-生命周期的那些事儿](https://www.jianshu.com/p/2c9bcbf092bc)

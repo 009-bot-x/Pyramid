@@ -25,6 +25,8 @@
 ## Jetpack 系列
 
 * [硬核讲解 Jetpack 之 LifeCycle 使用篇](article/jetpack/lifecycle_1.md)
+* [硬核讲解 Jetpack 之 LifeCycle 源码篇](article/jetpack/lifecycle_2.md)
+
 
 ## 走进 JDK 系列
 
