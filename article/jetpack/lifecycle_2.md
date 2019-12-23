@@ -6,9 +6,9 @@
 
 ## LifeCycle 三剑客
 
-在正式阅读源码之前，很有必要先介绍几个名词，**LifeCycleOwner** ，**LifecycleObserver**，**LifeCycle** 。
+在正式阅读源码之前，很有必要先介绍几个名词，**LifecycleOwner** ，**LifecycleObserver**，**Lifecycle** 。
 
-`LifeCycleOwner` 是一个接口 , 接口通常用来声明具备某种能力。`LifeCycleOwner` 的能力就是具备生命周期。典型的生命周期组件有 `Activity` 和 `Fragment` 。当然，我们也可以自定义生命周期组件。`LifeCycleOwner` 提供了 `getLifeCycle()` 方法来获取其 `LifeCycle` 对象。
+`LifecycleOwner` 是一个接口 , 接口通常用来声明具备某种能力。`LifecycleOwner` 的能力就是具有生命周期。典型的生命周期组件有 `Activity` 和 `Fragment` 。当然，我们也可以自定义生命周期组件。`LifecycleOwner` 提供了 `getLifecycle()` 方法来获取其 `Lifecycle` 对象。
 
 ```java
 public interface LifecycleOwner {
@@ -18,7 +18,7 @@ public interface LifecycleOwner {
 }
 ```
 
-`LifeCycleObserver` 是生命周期观察者，它是一个空接口。它没有任何方法，而是通过依赖 `OnLifecycleEvent` 注解来回调生命周期。
+`LifecycleObserver` 是生命周期观察者，它是一个空接口。它没有任何方法，依赖 `OnLifecycleEvent` 注解来接收生命周期回调。
 
 ```java
 public interface LifecycleObserver {
@@ -26,11 +26,11 @@ public interface LifecycleObserver {
 }
 ```
 
-**生命周期组件** 和 **生命周期观察者** 都有了，`LifeCycle` 就是它们之间的桥梁。
+**生命周期组件** 和 **生命周期观察者** 都有了，`Lifecycle` 就是它们之间的桥梁。
 
-`LifeCycle` 是具体的生命周期对象，每个 `LifeCycleOwner` 都会持有 `LifeCycle` 。通过 LifeCycle 我们可以获取当前生命周期状态，添加/删除 生命周期观察者。
+`Lifecycle` 是具体的生命周期对象，每个 `LifecycleOwner` 都会持有 `Lifecycle` 。通过 `Lifecycle` 我们可以获取当前生命周期状态，添加/删除 生命周期观察者等等。
 
-`LifeCycle` 内部定义了两个枚举类，`Event` 和 `State` 。`Event` 表示生命周期事件，与 LifeCycleOwner 的生命周期事件是相对应的。
+`Lifecycle` 内部定义了两个枚举类，`Event` 和 `State` 。`Event` 表示生命周期事件，与 LifecycleOwner 的生命周期事件是相对应的。
 
 ```java
 public enum Event {
@@ -103,19 +103,19 @@ public enum State {
     }
 ```
 
- `State` 可能相对比较难以理解，特别是其中枚举值的顺序。这里先不详细解读，但是务必记住源码中定义的枚举值顺序，`DESTROYED —— INITIALIZED —— CREATED —— STARTED ——RESUMED`，这个对于后面源码的理解特别重要。
+ `State` 可能相对比较难以理解，特别是其中枚举值的顺序。这里先不详细解读，但是务必记住这几个枚举值的顺序，`DESTROYED —— INITIALIZED —— CREATED —— STARTED ——RESUMED`，这个对于后面源码的理解特别重要。
 
-梳理一下三剑客的关系。生命周期组件 `LifeCycleOwner` 在进入特定的生命周期后，发送特定的生命周期事件 `Event` ，通知 `LIfeCycle` 进入特定的 `State` ，进而回调生命周期观察者 `LifeCycleObserver` 的指定方法。
+简单梳理一下三剑客的关系。生命周期组件 `LifecycleOwner` 在进入特定的生命周期后，发送特定的生命周期事件 `Event` ，通知 `Lifcycle` 进入特定的 `State` ，进而回调生命周期观察者 `LifeCycleObserver` 的指定方法。
 
 ## 从 addObserver() 下手
 
-面对源码无从下手的话，我们就从 LifeCycle 的基本使用入手。
+面对源码无从下手的话，我们就从 Lifecycle 的基本使用入手。
 
 ```java
 lifecycle.addObserver(LocationUtil( ))
 ```
 
-`lifecycle` 其实就是 `getLifeCycle()`方法，只是在 Kotlin中被 简写了。`getLifeCycle()` 是接口 `LifeCycleOwner` 的方法。而 `AppCompatActivity` 并没有直接实现 LifeCycleOwner，它的父类 `FragmentActivity` 也没有，在它的爷爷类 `ComponentActivity` 中才找到 LifeCycleOwner 的踪影，看一下接口的实现。
+`lifecycle` 其实就是 `getLifecycle()`方法，只是在 Kotlin中被 简写了。`getLifecycle()` 是接口 `LifecycleOwner` 的方法。而 `AppCompatActivity` 并没有直接实现 LifecycleOwner，它的父类 `FragmentActivity` 也没有，在它的爷爷类 `ComponentActivity` 中才找到 LifecycleOwner 的踪影，看一下接口的实现。
 
 ```java
 @Override
@@ -127,6 +127,8 @@ public Lifecycle getLifecycle() {
 `mLifecycleRegistry` 是 `LifecycleRegistry` 对象，`LifecycleRegistry` 是 `LifeCycle` 的实现类。那么这里的 `LifecycleRegistry` 就是我们的生命周期对象了。来看一下它的 `addObserver()` 方法。
 
 ```java
+> LifecycleRegistry.java
+
 ......
 
 // 保存 LifecycleObserver 及其对应的 State
@@ -181,7 +183,7 @@ public void addObserver(@NonNull LifecycleObserver observer) {
 }
 ```
 
-这里面要注意两个问题。第一个问题是生命周期的 "倒灌问题" ，这是我从 LiveData 那里借来的一次词。具体是什么问题呢？来举一个具体的例子，即使你在 `onResume( )` 中调用 `addObserver( )` 方法，观察者依然可以依次接收到 `onCreate` 和 `onStart` 事件 ，最终同步到 `targetState` 。这个 targetState 是通过 `calculateTargetState(observer)` 方法计算处理的。
+这里面要注意两个问题。第一个问题是生命周期的 "倒灌问题" ，这是我从 LiveData 那里借来的一次词。具体是什么问题呢？来举一个例子，即使你在 `onResume( )` 中调用 `addObserver( )` 方法来添加观察者，观察者依然可以依次接收到 `onCreate` 和 `onStart` 事件 ，最终同步到 `targetState` 。这个 targetState 是通过 `calculateTargetState(observer)` 方法计算出来的。
 
 ```java
 /**
@@ -199,9 +201,9 @@ public void addObserver(@NonNull LifecycleObserver observer) {
   }
 ```
 
-我们可以添加多个生命周期观察者，这时候就得注意维护它们的状态。每次添加的新的观察者的初始状态是 `INITIALIZED` ，需要把它同步到当前生命周期状态，确切的说，同步到一个不大于当前状态的 `targetState` 。从源码中的计算方式也有所体现，取得是 当前状态 mState，mObserverMap 中最后一个观察者的状态，有重入情况下 parentState 的状态 这三者中的最小值。
+我们可以添加多个生命周期观察者，这时候就得注意维护它们的状态。每次添加新的观察者的初始状态是 `INITIALIZED` ，需要把它同步到当前生命周期状态，确切的说，同步到一个不大于当前状态的 `targetState` 。从源码中的计算方式也有所体现，`targetState` 是 **当前状态 mState**，**mObserverMap 中最后一个观察者的状态** ，**有重入情况下 parentState 的状态** 这三者中的最小值。
 
-为什么要取这个最小值呢？我是这么理解的，当有新的生命周期事件时，需要将 `mObserverMap` 中的所有观察者都同步到新的同一状态，这个同步过程可能尚未完成，所以新加入的观察者只能先同步到最小状态。在新的观察者每改变一次生命周期，都会调用 `calculateTargetState()` 重新计算 `targetState` 。
+为什么要取这个最小值呢？我是这么理解的，当有新的生命周期事件时，需要将 `mObserverMap` 中的所有观察者都同步到新的同一状态，这个同步过程可能尚未完成，所以新加入的观察者只能先同步到最小状态。注意在 `addObserver` 方法的 `while` 循环中，新的观察者每改变一次生命周期，都会调用 `calculateTargetState()` 重新计算 `targetState` 。
 
 最终的稳定状态下，没有生命周期切换，没有添加新的观察者，`mObserverMap` 中的所有观察者应该处于同一个生命周期状态。
 
@@ -282,7 +284,9 @@ public static void injectIfNeededIn(Activity activity) {
  }
 ```
 
-`mProcessListener` 是处理应用进程生命周期的，暂时不去管它。先看一下 `dispatch()` 方法。
+`mProcessListener` 是处理应用进程生命周期的，暂时不去管它。
+
+先看一下 `dispatch()` 方法。
 
 ```java
 private void dispatch(Lifecycle.Event event) {
@@ -302,7 +306,7 @@ private void dispatch(Lifecycle.Event event) {
 }
 ```
 
-在 Activity 中注入 `ReportFragment` ，在 ReportFragment 的各个生命周期函数中通过 `dispatch()` 方法来分发生命周期事件。 最后是通过  `LifecycleRegistry` 的 `handleLifecycleEvent()` 方法来处理 。为了方便后面的代码理解，这里假定 `handleLifecycleEvent()` 方法中的参数是  `ON_RESUME` ，即现在要经历从 `onStart()` 同步到 `onResume()` 的过程 。
+在`ReportFragment` 的各个生命周期函数中通过 `dispatch()` 方法来分发生命周期事件， 然后调用  `LifecycleRegistry` 的 `handleLifecycleEvent()` 方法来处理 。为了方便后面的代码理解，这里假定 现在要经历从 `onStart()` 同步到 `onResume()` 的过程，即`handleLifecycleEvent()` 方法中的参数是  `ON_RESUME` 。
 
 ```java
 // 设置当前状态并通知观察者
@@ -312,7 +316,7 @@ public void handleLifecycleEvent(@NonNull Lifecycle.Event event) {
 }
 ```
 
-`getStateAfter()` 的作用是根据 Event 获取特定的 State ，并通知观察者同步到此生命周期状态。
+`getStateAfter()` 的作用是根据 Event 获取事件之后处于的状态 ，并通知观察者同步到此生命周期状态。
 
 ```java
 static State getStateAfter(Event event) {
@@ -353,7 +357,7 @@ private void moveToState(State next) {
 }
 ```
 
-首先将要同步到的生命周期状态赋给 `zhuangtaimState` ，此时 `mState` 的值就是 `RESUMED` 。然后调用 `sync()` 方法同步所有观察者的状态。
+首先将要同步到的生命周期状态赋给当前生命周期状态 `mState` ，此时 `mState` 的值就是 `RESUMED` 。然后调用 `sync()` 方法同步所有观察者的状态。
 
 ```java
 private void sync() {
@@ -401,15 +405,19 @@ private void forwardPass(LifecycleOwner lifecycleOwner) {
 }
 ```
 
-最终会调用 `ObserverWithState` 的 `dispatchEvent()` 方法。
+`forwardPass()`  会同步 `mObserverMap` 中的所有观察者到指定生命周期状态，如果跨度比较大，会依次分发中间状态。分发生命周期事件最终依赖 `ObserverWithState` 的 `dispatchEvent()` 方法。
 
-这里先暂停一下，不继续往下追源码。上面假定的场景是 `ON_START` 到 `ON_RESUME` 的过程。现在假定另一个场景，
-`ON_RESUME` 到 `ON_PAUSE` ，流程如下。
+这里先暂停存档一下，不继续往下追源码。上面假定的场景是 `ON_START` 到 `ON_RESUME` 的过程。现在假定另一个场景，我直接按下 Home 键返回桌面，当前 Activity 的生命周期从`onResumed` 到 `onPaused` ，流程如下。
 
-1.  `handleLifecycleEvent()` 方法的参数是 `ON_PAUSE`
-2.  `getStateAfter()` 得到要同步到的状态是  `STARTED` ，并赋给 `mState`，接着调用 `moveToState()`
-3. `moveToState(STARTED)` 中调用 `sync()` 方法同步
-4. `sync()` 方法中，`mState` 的值是 `STARTED` ，而 `mObserverMap` 中观察者的状态都是 `RESUMED` 。所以观察者们都需要往后挪一步，这调用的就是 `backwardPass()` 方法。
+1. `ReportFragment`  调用 `dispatch(Lifecycle.Event.ON_PAUSE)` ，分发 `ON_PAUSE` 事
+
+2. 调用 `LifecycleRegistry.handleLifecycleEvent()` 方法，参数是 `ON_PAUSE`
+
+3. `getStateAfter()` 得到要同步到的状态是  `STARTED` ，并赋给 `mState`，接着调用 `moveToState()`
+
+4. `moveToState(Lifecycle.State.STARTED)` 中调用 `sync()` 方法同步
+
+5. `sync()` 方法中，`mState` 的值是 `STARTED` ，而 `mObserverMap` 中观察者的状态都是 `RESUMED` 。所以观察者们都需要往后挪一步，这调用的就是 `backwardPass()` 方法。
 
 `backwardPass()` 方法其实和 `forwardPass()` 差不多。
 
@@ -435,7 +443,7 @@ private void backwardPass(LifecycleOwner lifecycleOwner) {
 
 二者唯一的区别就是获取要分发的事件，一个是 `upEvent()` ，一个是 `downEvent()` 。
 
-`upEvent() ` 是获取 state 升级所需要经历的事件，`downEvent()` 是获取 state 降级所需要经历的事件。其实从源码中一目了然。
+`upEvent() ` 是获取 state 升级所需要经历的事件，`downEvent()` 是获取 state 降级所需要经历的事件。
 
 ```java
 private static Event upEvent(State state) {
@@ -479,7 +487,7 @@ private static Event downEvent(State state) {
 DESTROYED —— INITIALIZED —— CREATED —— STARTED —— RESUMED
 ```
 
-`DESTROYED` 最小，`RESUMED` 最大 。仔细看一下这几个枚举值，你会发现并没有 `PAUSED` 。`onResume` 进入到 `onPause` 阶段最后分发的的确是 `ON_PAUSE` ，但是将观察者的状态置为了 `STARTED` 。
+`DESTROYED` 最小，`RESUMED` 最大 。`onResume` 进入到 `onPause` 阶段最后分发的生命周期事件的确是 `ON_PAUSE` ，但是将观察者的状态置为了 `STARTED` 。这是为什么呢？
 
 关于 `State` 和 `Event` 的关系，官网给出了一张图，如下所所示：
 
@@ -489,9 +497,13 @@ DESTROYED —— INITIALIZED —— CREATED —— STARTED —— RESUMED
 
 ![](https://upload-images.jianshu.io/upload_images/2669479-df0bb30ab769a55e.png?imageMogr2/auto-orient/strip|imageView2/2/w/1200/format/webp)
 
-**状态之间的事件**，**事件之后的状态**，**状态之间的大小** ，是不是有种一目了然的感觉？理解这种图很重要，可以说搞不清 Event 和 State 的关系，就看不懂这部分的源码。
+**状态之间的事件**，**事件之后的状态**，**状态之间的大小** ，是不是有种一目了然的感觉？理解这幅图很重要，可以说搞不清 Event 和 State 的关系，就看不懂 Lifecycle 的源码。
 
-再回到之前的源码解析，同步 Observer 生命周期的 `sync()` 方法最终会调用 `ObserverWithState` 的 `dispatchEvent()` 方法。
+
+
+## 谁来回调你的注解方法 ？
+
+再读取刚才的暂停存档，同步 Observer 生命周期的 `sync()` 方法最终会调用 `ObserverWithState` 的 `dispatchEvent()` 方法。
 
 ```java
 static class ObserverWithState {
@@ -617,7 +629,38 @@ private static int resolveObserverCallbackType(Class<?> klass) {
 }
 ```
 
-在普通的 Activity 中注册观察者调用的是 `ReflectiveGenericLifecycleObserver.onStateChanged()`  。
+注意其中的 `hasLifecycleMethods()` 方法。
+
+```java
+boolean hasLifecycleMethods(Class klass) {
+    if (mHasLifecycleMethods.containsKey(klass)) {
+        return mHasLifecycleMethods.get(klass);
+    }
+
+    Method[] methods = getDeclaredMethods(klass);
+    for (Method method : methods) {
+        OnLifecycleEvent annotation = method.getAnnotation(OnLifecycleEvent.class);
+        if (annotation != null) {
+            createInfo(klass, methods);
+            return true;
+        }
+    }
+    mHasLifecycleMethods.put(klass, false);
+    return false;
+}
+```
+
+这里会去寻找 `OnLifecycleEvent` 注解。所以我们通过 `OnLifecycleEvent`  注解实现的 `MyObserver` 的类型是 `REFLECTIVE_CALLBACK` ，表示使用反射调用。注意另一个类型 `GENERATED_CALLBACK` 表示使用注解生成的代码，而不是反射。
+
+所以，所以，**Lifecycle 可以选择使用 apt 编译期生成代码来避免使用运行时反射，以优化性能？**好像还真是这么一回事。这就让我想到了 **EventBus 的索引加速** 默认也是关闭的。看吧，这就是阅读源码的好处，总能发现自己的知识盲区。添加下列依赖，来提速 LifeCycle 吧 ！
+
+```java
+kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+```
+
+为了方便解析，还是回到反射调用上来。
+
+我们自己定义的在普通的观察者调用的是 `ReflectiveGenericLifecycleObserver.onStateChanged()`  。
 
 ```java
 class ReflectiveGenericLifecycleObserver implements GenericLifecycleObserver {
@@ -678,6 +721,16 @@ void invokeCallback(LifecycleOwner source, Lifecycle.Event event, Object target)
 }
 ```
 
-最后反射调用注解标记的生命周期方法。
+其实就很简单了，反射调用 `OnLifecycleEvent`  注解标记的生命周期回调方法。
+
+
+
+## Wait For More
+
+本想再接着分析进程生命周期 `ProcessLifecycleOwner` 和 `Lifecycle` 的协程使用相关源码，可是文章篇幅有点过长了，就留到下一篇吧，敬请期待！
 
 ## 总结
+
+
+
+[Android架构之美-Lifecycle]()
