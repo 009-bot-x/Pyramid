@@ -13,6 +13,10 @@
 >
 > 这里有一群志同道合的朋友在等你 ！
 
+**最新文章 ！**
+
+**[Android 程序员不得不收藏的个人博客(持续更新...)](article/other/chrome_blog.md)**
+
 ## 我的开源项目
 
 * [Box —— 我的开发助手](article/my/box.md)
