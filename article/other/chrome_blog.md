@@ -90,7 +90,8 @@
 
 19. [JohnnyShieh's Blog](http://johnnyshieh.github.io/)
 
-20. [咕咚的个人站点](http://gudong.name/)
+20. ~~[咕咚的个人站点]http://gudong.name/~~
+    [咕咚同学](https://gudong.site/)
 
     一直关注的博客，喜欢作者博客里展现的生活状态。
 
