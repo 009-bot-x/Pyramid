@@ -91,12 +91,13 @@
 19. [JohnnyShieh's Blog](http://johnnyshieh.github.io/)
 
 20. ~~[咕咚的个人站点]http://gudong.name/~~
+
     [咕咚同学](https://gudong.site/)
 
     一直关注的博客，喜欢作者博客里展现的生活状态。
 
 21. [Droid's blogs](http://www.woaitqs.cc/)
-
+***
     喜欢最近更新的 Kotlin 系列。
 
 22. [wingjay](http://wingjay.com/)
